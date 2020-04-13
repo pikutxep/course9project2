@@ -1,0 +1,44 @@
+---
+title: "week 2 project"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Population in Navarre
+
+In this map I'm going to show all villages in my region with it's name, post code and population.
+
+First we will load libraries:
+
+```{r libs}
+library(leaflet)
+```
+
+First we load an csv file with the info
+
+```{r load}
+data = read.csv("2884bsc - 2.csv", header = FALSE, sep=";")
+
+head(data)
+```
+
+I this csv first row is post code, second row is village name, fifth row is population and sixth and seventh rows are lat and lng. 
+
+Now we will preprocess data to be able to load it the map.
+
+```{r process}
+lat = as.numeric(unlist(data[6]))
+lng = as.numeric(unlist(data[7]))
+
+names <- paste(data[,2], data[,1], data[,5], sep=" ")
+```
+
+Finally we can print the map.
+
+```{r map, echo = FALSE}
+Sys.Date()
+df %>% leaflet() %>% addTiles() %>% addMarkers(popup = names)
+```
